@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Restaurant Booking Form</title>
+</head>
+<body>
+	<h1>Restaurant Booking Form</h1>
+
+	<form id="booking-form">
+		<label for="booking-type">Choice of Booking:</label>
+		<select id="booking-type" name="booking-type" onchange="showBookingOptions()">
+			<option value="">Select Booking Type</option>
+			<option value="full-day">Full Day Booking</option>
+			<option value="half-day">Half Day Booking</option>
+			<option value="hourly">Hourly Booking</option>
+		</select>
+		<br><br>
+
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name"><br><br>
+
+		<label for="mobile">Mobile Number:</label>
+		<input type="tel" id="mobile" name="mobile"><br><br>
+
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br><br>
+
+		<label for="no-of-persons">No of Persons:</label>
+		<input type="number" id="no-of-persons" name="no-of-persons"><br><br>
+
+		<div id="booking-options"></div>
+
+		<button type="button" onclick="submitForm()">Submit</button>
+	</form>
+
+	<script>
+		function showBookingOptions() {
+			var bookingType = document.getElementById("booking-type").value;
+			var bookingOptions = document.getElementById("booking-options");
+
+			// Clear the booking options div
+			bookingOptions.innerHTML = "";
+
+			// Show appropriate options based on the booking type
+			if (bookingType === "full-day") {
+				var dateInput = document.createElement("input");
+				dateInput.type = "date";
+				dateInput.id = "date";
+				dateInput.name = "date";
+				bookingOptions.appendChild(dateInput);
+			} else if (bookingType === "half-day") {
+				var dateInput = document.createElement("input");
+				dateInput.type = "date";
+				dateInput.id = "date";
+				dateInput.name = "date";
+				bookingOptions.appendChild(dateInput);
+
+				var slotInput = document.createElement("select");
+				slotInput.id = "slot";
+				slotInput.name = "slot";
+
+				var option1 = document.createElement("option");
+				option1.value = "breakfast";
+				option1.text = "Breakfast";
+				slotInput.appendChild(option1);
+
+				var option2 = document.createElement("option");
+				option2.value = "lunch";
+				option2.text = "Lunch";
+				slotInput.appendChild(option2);
+
+				var option3 = document.createElement("option");
+				option3.value = "dinner";
+				option3.text = "Dinner";
+				slotInput.appendChild(option3);
+
+				bookingOptions.appendChild(slotInput);
+			} else if (bookingType === "hourly") {
+				var dateInput = document.createElement("input");
+				dateInput.type = "date";
+				dateInput.id = "date";
+				dateInput.name = "date";
+				bookingOptions.appendChild(dateInput);
+
+				var timeInput = document.createElement("input");
+				timeInput.type = "time";
+				timeInput.id = "time";
+				timeInput.name = "time";
+				bookingOptions.appendChild(timeInput);
+			}
+		}
+
+		function submitForm() {
+			var bookingType = document.getElementById("booking-type").value;
+			var name = document.getElementById("name").value
+		var mobile = document.getElementById("mobile").value;
+		var email = document.getElementById("email").value;
+		var noOfPersons = document.getElementById("no-of-persons").value;
+		var date = document.getElementById("date") ? document.getElementById("date").value : "";
+		var time = document.getElementById("time") ? document.getElementById("time").value : "";
+		var slot = document.getElementById("slot") ? document.getElementById("slot").value : "";
+
+		// Validate the form data
+		if (!bookingType || !name || !mobile || !email || !noOfPersons) {
+			alert("Please fill all the required fields.");
+			return;
+		}
+
+		if (bookingType === "full-day" && !date) {
+			alert("Please select a date for full day booking.");
+			return;
+		}
+
+		if (bookingType === "half-day" && (!date || !slot)) {
+			alert("Please select a date and slot for half day booking.");
+			return;
+		}
+
+		if (bookingType === "hourly" && (!date || !time)) {
+			alert("Please select a date and time for hourly booking.");
+			return;
+		}
+
+		// Submit the form data
+		alert("Booking submitted successfully!\n\nBooking Type: " + bookingType + "\nName: " + name + "\nMobile: " + mobile + "\nEmail: " + email + "\nNo of Persons: " + noOfPersons + "\nDate: " + date + "\nTime: " + time + "\nSlot: " + slot);
+		document.getElementById("booking-form").reset();
+		showBookingOptions(); // Reset the booking options based on the booking type
+	}
+</script>
+</body>
+</html>
